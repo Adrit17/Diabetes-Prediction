@@ -1,5 +1,5 @@
-# Diabetes-Prediction
-Prediting diabetes using Deep Neural Network with XGBoost
+# Diabetes-Detection
+Detecting diabetes using Deep Neural Network with XGBoost
 
 Methods used in the code are:
 
