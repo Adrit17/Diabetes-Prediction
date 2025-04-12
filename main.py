@@ -126,3 +126,33 @@ def evaluate_xgboost_with_feature_importance(X, y, feature_names, folds=5):
 dnn_results = evaluate_tuned_dnn(X_scaled, y)
 xgb_results, feature_importance = evaluate_xgboost_with_feature_importance(X_scaled, y, X.columns.tolist())
 
+# Plot comparison bar charts for DNN and XGBoost results
+def plot_comparison_metrics(dnn_df, xgb_df):
+    metrics = ['Accuracy', 'Precision', 'Recall', 'F1', 'AUC']
+    
+    # Calculate average metrics
+    dnn_means = dnn_df[metrics].mean()
+    xgb_means = xgb_df[metrics].mean()
+
+    # Create a DataFrame for plotting
+    plot_df = pd.DataFrame({
+        'Metric': metrics,
+        'DNN': dnn_means.values,
+        'XGBoost': xgb_means.values
+    })
+
+    # Melt the DataFrame for seaborn
+    plot_df_melted = plot_df.melt(id_vars='Metric', var_name='Model', value_name='Score')
+
+    # Plot
+    plt.figure(figsize=(10, 6))
+    sns.barplot(data=plot_df_melted, x='Metric', y='Score', hue='Model')
+    plt.title('Model Performance Comparison')
+    plt.ylim(0.7, 1.0)  
+    plt.tight_layout()
+    plt.savefig('C:/Users/DCL/Desktop/Research Paper/model_performance_comparison.png')
+    plt.show()
+
+# Call the plotting function
+plot_comparison_metrics(dnn_results, xgb_results)
+
